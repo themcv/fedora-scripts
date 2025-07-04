@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 # This script is to install the basics on a new Fedora box. 
 # I am not responsible for if things break or it doesn't work.
 # This script is not a substitue for not knowing what is going on.
@@ -8,7 +8,7 @@
 fv=$(cat /etc/os-release | grep VERSION_ID | cut -d = -f2)
 UPDATES=$(dnf check-update --quiet | grep -Ev 'Last metadata expiration|^$' | wc -l)
 sb=$(mokutil --sb-state | grep disabled | wc -l)
-nv=$(modinfo -F version nvidia | grep ERROR | wc -l)
+nv=$(modinfo -F version nvidia | wc -l)
 spinner=('|' '/' '-' '\\')
 delay=0.1
 i=0
@@ -76,7 +76,7 @@ sleep 2
 dnf install -y akmod-nvidia xorg-x11-drv-nvidia-cuda
 
 # Wait on akmods to finish
-while [ $nv -gt 0 ];do
+while [ $nv -gt 1 ];do
         printf "\r[%s] Waiting on akmods to finish - this will take a bit" "${spinner[i]}"
         i=$(( (i + 1) % ${#spinner[@]} ))
         sleep "$delay"
