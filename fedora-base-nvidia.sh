@@ -44,7 +44,7 @@ fi
 echo "Installing RPM fusion free repos for Fedora $fv"
 dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$fv.noarch.rpm
 
-echo "Installing RPM fusion non-free repos for Fedora $fv
+echo "Installing RPM fusion non-free repos for Fedora $fv"
 dnf install -y https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$fv.noarch.rpm
 
 # Start the QOL stuff
