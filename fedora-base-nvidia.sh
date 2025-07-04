@@ -36,5 +36,12 @@ dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-
 echo "Installing RPM fusion non-free repos for Fedora $fv
 dnf install -y https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$fv.noarch.rpm
 
+echo "Swapping ffmpeg"
+dnf swap ffmpeg-free ffmpeg --allowerasing
+
 echo "Installing Multimedia codecs"
 dnf install @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
+
+
+
+
