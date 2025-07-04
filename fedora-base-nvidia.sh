@@ -8,10 +8,9 @@
 fv=$(cat /etc/os-release | grep VERSION_ID | cut -d = -f2)
 UPDATES=$(dnf check-update --quiet | grep -Ev 'Last metadata expiration|^$' | wc -l)
 sb=$(mokutil --sb-state | grep disabled | wc -l)
-nv=$(modinfo -F version nvidia | wc -l)
-spinner=('|' '/' '-' '\\')
-delay=0.1
+spinner=( '⠋' '⠙' '⠹' '⠸' '⠼' '⠴' '⠦' '⠧' '⠇' '⠏' )
 i=0
+delay=0.1
 
 # Make sure script it running as root
 
@@ -75,16 +74,16 @@ echo "Installing NVIDIA drivers"
 sleep 2
 dnf install -y akmod-nvidia xorg-x11-drv-nvidia-cuda
 
+# Define probe for nvidia
+nv=$(modinfo -F version nvidia > /tmp/nvidia.tmp)
+
 # Wait on akmods to finish
-while [ $nv -gt 1 ];do
-        printf "\r[%s] Waiting on akmods to finish - this will take a bit" "${spinner[i]}"
-        i=$(( (i + 1) % ${#spinner[@]} ))
-        sleep "$delay"
+until modinfo -F version nvidia &>/dev/null; do
+	printf "\r[%s] Waiting on akmods to finish" "${spinner[i]}"
+	i=$(( (i + 1) % ${#spinner[@]} ))
+	sleep "$delay"
 done
 
+echo " "
 echo "Done! You should be able to reboot and have a working system"
 echo "Reminder: You can hit escape during boot to view what is going on."
-
-
-
-
